@@ -21,10 +21,14 @@
       <div class="view login-view" ng-show="ready">
 
         <div ng-hide="tickedterms">
-          <div class="box row" style="min-height:400px;">
-            <input type="checkbox" ng-change="tickterms()" />
+          <div class="box row" style="min-height:200px;padding:20px;">
+            <p>Before you continue, please read and agree to our terms and conditions:
+            </p>
+            <p>
+            <input type="checkbox" ng-click="tickterms()" />
 
             I agree with the ClusterHQ Volume Hub <a href="https://clusterhq.com/terms-of-use/" target="_blank">Terms of Use</a> and <a href="https://clusterhq.com/privacy/" target="_blank">Privacy Policy</a>
+            </p>
           </div>
 
         </div>
