@@ -20,94 +20,88 @@
     <script type="text/ng-template" id="views/login.html">
       <div class="view login-view" ng-show="ready">
 
-        <div ng-hide="tickedterms">
-          <div class="box row" style="min-height:200px;padding:20px;">
-            <p>Before you continue, please read and agree to our terms and conditions:
-            </p>
-            <p>
-            <input type="checkbox" ng-click="tickterms()" />
+        <div class="box row">
+          <div class="email-password-area  col-xs-12" ng-class="[hasSocial ? 'small col-sm-8' : 'large col-sm-12']">
+            <div class="header">
+              <span>Log In</span>
+              <span ng-show="canRegister" wd-can-register>
+                <span> or </span>
+                <a href="#register">Create an Account</a>
+              </span>
 
-            I agree with the ClusterHQ Volume Hub <a href="https://clusterhq.com/terms-of-use/" target="_blank">Terms of Use</a> and <a href="https://clusterhq.com/privacy/" target="_blank">Privacy Policy</a>
+            </div>
+            <div class="alert alert-danger bad-login" ng-show="errors.badLogin">
+              Invalid username or password.
+            </div>
+            <div class="alert alert-danger not-found" ng-show="errors.notFound">
+              <span>Account does not exist. Do you need to </span>
+              <a href="#/register">create an account</a>
+              <span>?</span>
+            </div>
+            <div class="alert alert-danger" ng-show="errors.unknown">An unkown error has occurred</div>
+            <div class="alert alert-danger" ng-show="errors.emailPasswordRequired">Please enter your email and password.</div>
+            <div class="alert alert-danger" ng-show="errors.userMessage">
+              <strong>Sorry, an error occured.  Please reload the page and try again.</strong>
+              <br/>
+              <br/>
+              <p>{{errors.userMessage}}</p>
+            </div>
+            <form class="login-form form-horizontal" role="form" ng-submit="submit()">
+              <div class="form-group group-email" ng-show="showOrganizationField" ng-class="{'has-error': (errors.organizationNameKeyInvalid || errors.organizationNameKeyRequired)}">
+                <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Organization</label>
+                <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
+                  <input class="form-control" type="text" name="organizationNameKey" ng-model="organizationNameKey" placeholder="Organization" ng-disabled="disableOrganizationField"/>
+
+                  <span ng-if="errors.organizationNameKeyRequired" class="help-block">
+                    An organization name is required.
+                  </span>
+                  <span ng-if="errors.organizationNameKeyInvalid" class="help-block">
+                    Invalid Organization Name.
+                  </span>
+                </div>
+              </div>
+              <div class="form-group group-email">
+                <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Email</label>
+                <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
+                  <input class="form-control" type="text" name="username" ng-model="username" placeholder="Email"/>
+                </div>
+              </div>
+              <div class="form-group group-password">
+                <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Password</label>
+                <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
+                  <input class="form-control" type="password" name="password" ng-model="password" placeholder="Password"/>
+                </div>
+              </div>
+              <div class="form-group group-remember-me">
+                <div class="col-sm-8" ng-class="[hasSocial ? '' : 'col-sm-offset-4']">
+                  <input type="checkbox" id="remember">
+                  <label for="remember">Remember me</label>
+                </div>
+              </div>
+              
+              <div>
+                <button class="login btn btn-login btn-sp-green" type="submit" ng-disabled="submitting">Log In</button>
+              </div>
+            </form>
+          </div>
+
+          <div class="social-area  col-xs-12 col-sm-4" ng-show="hasSocial">
+            <div class="header">&nbsp;</div>
+            <label>Easy 1-click login:</label>
+            <button ng-repeat="p in providers" class="btn btn-social btn-{{p.providerId}}" ng-click="providerLogin(p.providerId)">{{p.providerId}}</button>
+            <p ng-hide="has_ticked_cookie_terms">
+              <input type="checkbox" ng-model="has_ticked_terms" ng-click="tick_login_terms()" />
+
+              I agree with the ClusterHQ Volume Hub <a href="https://clusterhq.com/terms-of-use/" target="_blank">Terms of Use</a> and <a href="https://clusterhq.com/privacy/" target="_blank">Privacy Policy</a>
+            </p>
+            <p ng-show="login_terms_error" style="color:red;">
+              {{ login_terms_error }}
             </p>
           </div>
 
         </div>
 
-        <div ng-show="tickedterms">
-          <div class="box row">
-            <div class="email-password-area  col-xs-12" ng-class="[hasSocial ? 'small col-sm-8' : 'large col-sm-12']">
-              <div class="header">
-                <span>Log In</span>
-                <span ng-show="canRegister" wd-can-register>
-                  <span> or </span>
-                  <a href="#register">Create an Account</a>
-                </span>
-
-              </div>
-              <div class="alert alert-danger bad-login" ng-show="errors.badLogin">
-                Invalid username or password.
-              </div>
-              <div class="alert alert-danger not-found" ng-show="errors.notFound">
-                <span>Account does not exist. Do you need to </span>
-                <a href="#/register">create an account</a>
-                <span>?</span>
-              </div>
-              <div class="alert alert-danger" ng-show="errors.unknown">An unkown error has occurred</div>
-              <div class="alert alert-danger" ng-show="errors.emailPasswordRequired">Please enter your email and password.</div>
-              <div class="alert alert-danger" ng-show="errors.userMessage">
-                <strong>Sorry, an error occured.  Please reload the page and try again.</strong>
-                <br/>
-                <br/>
-                <p>{{errors.userMessage}}</p>
-              </div>
-              <form class="login-form form-horizontal" role="form" ng-submit="submit()">
-                <div class="form-group group-email" ng-show="showOrganizationField" ng-class="{'has-error': (errors.organizationNameKeyInvalid || errors.organizationNameKeyRequired)}">
-                  <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Organization</label>
-                  <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
-                    <input class="form-control" type="text" name="organizationNameKey" ng-model="organizationNameKey" placeholder="Organization" ng-disabled="disableOrganizationField"/>
-
-                    <span ng-if="errors.organizationNameKeyRequired" class="help-block">
-                      An organization name is required.
-                    </span>
-                    <span ng-if="errors.organizationNameKeyInvalid" class="help-block">
-                      Invalid Organization Name.
-                    </span>
-                  </div>
-                </div>
-                <div class="form-group group-email">
-                  <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Email</label>
-                  <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
-                    <input class="form-control" type="text" name="username" ng-model="username" placeholder="Email"/>
-                  </div>
-                </div>
-                <div class="form-group group-password">
-                  <label ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-4']">Password</label>
-                  <div ng-class="[hasSocial ? 'col-sm-12' : 'col-sm-8']">
-                    <input class="form-control" type="password" name="password" ng-model="password" placeholder="Password"/>
-                  </div>
-                </div>
-                <div class="form-group group-remember-me">
-                  <div class="col-sm-8" ng-class="[hasSocial ? '' : 'col-sm-offset-4']">
-                    <input type="checkbox" id="remember">
-                    <label for="remember">Remember me</label>
-                  </div>
-                </div>
-                <div>
-                  <button class="login btn btn-login btn-sp-green" type="submit" ng-disabled="submitting">Log In</button>
-                </div>
-              </form>
-            </div>
-
-            <div class="social-area  col-xs-12 col-sm-4" ng-show="hasSocial">
-              <div class="header">&nbsp;</div>
-              <label>Easy 1-click login:</label>
-              <button ng-repeat="p in providers" class="btn btn-social btn-{{p.providerId}}" ng-click="providerLogin(p.providerId)">{{p.providerId}}</button>
-            </div>
-
-          </div>
-
-          <a class="forgot" href="#forgot">Forgot Password?</a>
-        </div>
+        <a class="forgot" href="#forgot">Forgot Password?</a>
 
       </div>
 
@@ -167,6 +161,17 @@
                   <input type="password" class="form-control" name="passwordConfirm" form-control password-match-validation validate-on-blur/>
                   <small class="help-block" ng-show="validationError">Password does not match</small>
                 </div>
+              </div>
+
+              <div>
+                <p ng-show="has_not_ticked_terms">
+                  <input type="checkbox" ng-model="has_ticked_terms" ng-click="tick_register_terms()" />
+
+                  I agree with the ClusterHQ Volume Hub <a href="https://clusterhq.com/terms-of-use/" target="_blank">Terms of Use</a> and <a href="https://clusterhq.com/privacy/" target="_blank">Privacy Policy</a>
+                </p>
+                <p ng-show="register_terms_error" style="color:red;">
+                  {{ register_terms_error }}
+                </p>
               </div>
 
               <button class="btn btn-register btn-sp-green" type="submit" ng-disabled="submitting">Create Account</button>
