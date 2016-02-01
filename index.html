@@ -92,6 +92,9 @@
             <div>
               <terms-checkbox page="login" />
             </div>
+            <div>
+              <eu-checkbox page="login" />
+            </div>
           </div>
 
         </div>
@@ -160,6 +163,10 @@
 
               <div>
                 <terms-checkbox page="register" />
+              </div>
+
+              <div>
+                <eu-checkbox page="login" />
               </div>
 
               <button class="btn btn-register btn-sp-green" type="submit" ng-disabled="submitting">Create Account</button>
@@ -369,6 +376,18 @@
         </p>
         <p ng-show="terms_error" style="color:red;">
           {{ terms_error }}
+        </p>
+      </div>
+    </script>
+    <script type="text/ng-template" id="views/eu-checkbox.html">
+      <div>
+        <p ng-hide="has_ticked_cookie_eu">
+          <input type="checkbox" ng-model="has_ticked_eu" />
+
+          I agree that ClusterHQ may store and process my data outside the EEA
+        </p>
+        <p ng-show="eu_error" style="color:red;">
+          {{ eu_error }}
         </p>
       </div>
     </script>
