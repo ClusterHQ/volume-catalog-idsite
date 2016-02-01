@@ -89,14 +89,9 @@
             <div class="header">&nbsp;</div>
             <label>Easy 1-click login:</label>
             <button ng-repeat="p in providers" class="btn btn-social btn-{{p.providerId}}" ng-click="providerLogin(p.providerId)">{{p.providerId}}</button>
-            <p ng-hide="has_ticked_cookie_terms">
-              <input type="checkbox" ng-model="has_ticked_terms" ng-click="tick_login_terms()" />
-
-              I agree with the ClusterHQ Volume Hub <a href="https://clusterhq.com/terms-of-use/" target="_blank">Terms of Use</a> and <a href="https://clusterhq.com/privacy/" target="_blank">Privacy Policy</a>
-            </p>
-            <p ng-show="login_terms_error" style="color:red;">
-              {{ login_terms_error }}
-            </p>
+            <div>
+              <terms-checkbox page="login" />
+            </div>
           </div>
 
         </div>
@@ -164,14 +159,7 @@
               </div>
 
               <div>
-                <p ng-show="has_not_ticked_terms">
-                  <input type="checkbox" ng-model="has_ticked_terms" ng-click="tick_register_terms()" />
-
-                  I agree with the ClusterHQ Volume Hub <a href="https://clusterhq.com/terms-of-use/" target="_blank">Terms of Use</a> and <a href="https://clusterhq.com/privacy/" target="_blank">Privacy Policy</a>
-                </p>
-                <p ng-show="register_terms_error" style="color:red;">
-                  {{ register_terms_error }}
-                </p>
+                <terms-checkbox page="register" />
               </div>
 
               <button class="btn btn-register btn-sp-green" type="submit" ng-disabled="submitting">Create Account</button>
@@ -371,6 +359,18 @@
       <small class="help-block" ng-show="errors.requireDiacritical" wd-requireDiacritical>Password requires a diacritical character</small>
       <small class="help-block" ng-show="errors.requireUpperCase" wd-requireUpperCase>Password requires a uppercase letter</small>
       <small class="help-block" ng-show="errors.requireLowerCase" wd-requireLowerCase>Password requires a lowercase letter</small>
+    </script>
+    <script type="text/ng-template" id="views/terms-checkbox.html">
+      <div>
+        <p ng-hide="has_ticked_cookie_terms">
+          <input type="checkbox" ng-model="has_ticked_terms" ng-click="tick_terms()" />
+
+          I agree with the ClusterHQ Volume Hub <a href="https://clusterhq.com/terms-of-use/" target="_blank">Terms of Use</a> and <a href="https://clusterhq.com/privacy/" target="_blank">Privacy Policy</a>
+        </p>
+        <p ng-show="terms_error" style="color:red;">
+          {{ terms_error }}
+        </p>
+      </div>
     </script>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
