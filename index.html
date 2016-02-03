@@ -381,7 +381,7 @@
     </script>
     <script type="text/ng-template" id="views/eu-checkbox.html">
       <div>
-        <p ng-hide="has_ticked_cookie_eu">
+        <p ng-hide="not_loaded_location || has_ticked_cookie_eu">
           <input type="checkbox" ng-model="has_ticked_eu" />
 
           I agree that ClusterHQ may store and process my data outside the EEA
