@@ -369,24 +369,24 @@
     </script>
     <script type="text/ng-template" id="views/terms-checkbox.html">
       <div>
-        <p ng-hide="has_ticked_cookie_terms">
+        <p ng-hide="has_ticked_cookie_terms" style="font-size:0.8em;">
           <input type="checkbox" ng-model="has_ticked_terms" />
 
           I agree with the ClusterHQ Volume Hub <a href="https://clusterhq.com/terms-of-use/" target="_blank">Terms of Use</a> and <a href="https://clusterhq.com/privacy/" target="_blank">Privacy Policy</a>
         </p>
-        <p ng-show="terms_error" style="color:red;">
+        <p ng-show="terms_error" style="color:red;" style="font-size:0.8em;">
           {{ terms_error }}
         </p>
       </div>
     </script>
     <script type="text/ng-template" id="views/eu-checkbox.html">
       <div>
-        <p ng-hide="not_loaded_location || has_ticked_cookie_eu">
+        <p ng-hide="not_loaded_location || has_ticked_cookie_eu" style="font-size:0.8em;">
           <input type="checkbox" ng-model="has_ticked_eu" />
 
           I agree that ClusterHQ may store and process my data outside the EEA
         </p>
-        <p ng-show="eu_error" style="color:red;">
+        <p ng-show="eu_error" style="color:red;" style="font-size:0.8em;">
           {{ eu_error }}
         </p>
       </div>
@@ -397,10 +397,10 @@
 
     <div class="container" ng-controller="ErrorCtrl" ng-cloak>
       <div class="logo-container">
-        <img ng-show="logoUrl" class="logo img-responsive" ng-src="{{logoUrl}}"/>
-        <div style="margin-top:10px;">
+        <img ng-show="logoUrl" class="logo img-responsive" ng-src="{{logoUrl}}" style="padding-right:20px" />
+        <div style="margin-top:20px;text-align:center;">
           <p>
-            Volume Hub is a free tool from ClusterHQ for creating, viewing and monitoring your Flocker Clusters.
+            Volume Hub is a free tool from ClusterHQ for creating,<br />viewing and monitoring your Flocker clusters.
           </p>
         </div>
       </div>
